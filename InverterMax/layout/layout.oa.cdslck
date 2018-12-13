@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      bdonohue6
+HostName                       ecelinsrvz.ece.gatech.edu
+ProcessIdentifier              70896
+ProcessCreationTime_UTC        1542689643
+ProcessCreationTime_Readable   Mon Nov 19 23:54:03 2018 EST
+AppIdentifier                  OA File System Design Manager
+OSType                         unix
+ReasonForPlacingEditLock       OpenAccess edit lock
+FilePathUsedToEditLock         /nethome/bdonohue6/ece6130/6130/InverterMax/layout/layout.oa.cdslck.dirlck
+TimeEditLocked                 Tue Nov 20 00:01:34 2018 EST

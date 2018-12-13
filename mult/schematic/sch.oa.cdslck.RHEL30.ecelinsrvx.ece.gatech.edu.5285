@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      dzuberi3
+HostName                       ecelinsrvx.ece.gatech.edu
+ProcessIdentifier              5285
+ProcessCreationTime_UTC        1544390965
+ProcessCreationTime_Readable   Sun Dec  9 16:29:25 2018 EST
+AppIdentifier                  OA File System Design Manager
+OSType                         unix
+ReasonForPlacingEditLock       OpenAccess edit lock
+FilePathUsedToEditLock         /nethome/dzuberi3/6130/mult/schematic/sch.oa.cdslck
+TimeEditLocked                 Sun Dec  9 16:30:18 2018 EST

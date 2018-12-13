@@ -1,0 +1,296 @@
+// Generated for: spectre
+// Generated on: Dec  9 16:32:34 2018
+// Design library name: 6130
+// Design cell name: FIR
+// Design view name: schematic
+simulator lang=spectre
+global 0 vdd!
+parameters a
+
+// Library name: 6130
+// Cell name: InverterMax
+// View name: schematic
+subckt InverterMax Gnd I O Vdd
+    M0 (O I Vdd Vdd) PMOS_VTL w=2u l=50n as=2.1e-13 ad=2.1e-13 ps=2.21u \
+        pd=2.21u ld=105n ls=105n m=1
+    M1 (O I Gnd Gnd) NMOS_VTL w=460.0n l=50n as=4.83e-14 ad=4.83e-14 \
+        ps=670.0n pd=670.0n ld=105n ls=105n m=1
+ends InverterMax
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: TransmitterMax
+// View name: schematic
+subckt TransmitterMax ClkN ClkP Gnd I O Vdd
+    M0 (O ClkP I Vdd) PMOS_VTL w=2u l=50n as=2.1e-13 ad=2.1e-13 ps=2.21u \
+        pd=2.21u ld=105n ls=105n m=1
+    M1 (O ClkN I Gnd) NMOS_VTL w=460.0n l=50n as=4.83e-14 ad=4.83e-14 \
+        ps=670.0n pd=670.0n ld=105n ls=105n m=1
+ends TransmitterMax
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: DFFMax
+// View name: schematic
+subckt DFFMax Clk D Gnd Q Vdd
+    I4 (Gnd Q net35 Vdd) InverterMax
+    I3 (Gnd net36 Q Vdd) InverterMax
+    I2 (Gnd net32 net28 Vdd) InverterMax
+    I1 (Gnd net29 net32 Vdd) InverterMax
+    I0 (Gnd Clk net13 Vdd) InverterMax
+    I8 (Clk net13 Gnd net28 net29 Vdd) TransmitterMax
+    I7 (net13 Clk Gnd D net29 Vdd) TransmitterMax
+    I6 (net13 Clk Gnd net35 net36 Vdd) TransmitterMax
+    I5 (Clk net13 Gnd net32 net36 Vdd) TransmitterMax
+ends DFFMax
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: 4BitReg
+// View name: schematic
+subckt _sub0 Clk D0 D1 D2 D3 Gnd Q0 Q1 Q2 Q3 Vdd
+    I3 (Clk D3 Gnd Q3 Vdd) DFFMax
+    I2 (Clk D2 Gnd Q2 Vdd) DFFMax
+    I1 (Clk D1 Gnd Q1 Vdd) DFFMax
+    I0 (Clk D0 Gnd Q0 Vdd) DFFMax
+ends _sub0
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: inv5x
+// View name: schematic
+subckt inv5x in out
+    M1 (out in 0 0) NMOS_VTL w=465.00n l=50n as=4.8825e-14 ad=4.8825e-14 \
+        ps=675.00n pd=675.00n ld=105n ls=105n m=1
+    M0 (out in vdd! vdd!) PMOS_VTL w=2u l=50n as=2.1e-13 ad=2.1e-13 \
+        ps=2.21u pd=2.21u ld=105n ls=105n m=1
+ends inv5x
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: nand5
+// View name: schematic
+subckt nand5 A B out
+    M1 (net5 A 0 0) NMOS_VTL w=475.00n l=50n as=4.9875e-14 ad=4.9875e-14 \
+        ps=685.00n pd=685.00n ld=105n ls=105n m=1
+    M0 (out B net5 0) NMOS_VTL w=475.00n l=50n as=4.9875e-14 ad=4.9875e-14 \
+        ps=685.00n pd=685.00n ld=105n ls=105n m=1
+    M2 (out A vdd! vdd!) PMOS_VTL w=1u l=50n as=1.05e-13 ad=1.05e-13 \
+        ps=1.21u pd=1.21u ld=105n ls=105n m=1
+    M3 (out B vdd! vdd!) PMOS_VTL w=1u l=50n as=1.05e-13 ad=1.05e-13 \
+        ps=1.21u pd=1.21u ld=105n ls=105n m=1
+ends nand5
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: and5x
+// View name: schematic
+subckt and5x A B out
+    I1 (net7 out) inv5x
+    I0 (A B net7) nand5
+ends and5x
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: XOR5
+// View name: schematic
+subckt XOR5 a b f
+    M11 (net012 b 0 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M9 (net08 a 0 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M3 (f net012 net25 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M2 (net25 net08 0 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M1 (0 b net26 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M0 (net26 a f 0) NMOS_VTL w=300n l=50n as=3.15e-14 ad=3.15e-14 \
+        ps=510.0n pd=510.0n ld=105n ls=105n m=1
+    M10 (net012 b vdd! vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+    M8 (net08 a vdd! vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+    M7 (f net08 net28 vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+    M6 (net27 a f vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+    M5 (vdd! net012 net27 vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+    M4 (net28 b vdd! vdd!) PMOS_VTL w=1.0775u l=50n as=1.13138e-13 \
+        ad=1.13138e-13 ps=1.2875u pd=1.2875u ld=105n ls=105n m=1
+ends XOR5
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: half_adder
+// View name: schematic
+subckt half_adder A B C sum
+    I1 (A B C) and5x
+    I0 (A B sum) XOR5
+ends half_adder
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: NOR_5x
+// View name: schematic
+subckt NOR_5x A B OUT
+    M1 (OUT B net8 vdd!) PMOS_VTL w=1.25u l=50n as=1.3125e-13 \
+        ad=1.3125e-13 ps=1.46u pd=1.46u ld=105n ls=105n m=1
+    M0 (net8 A vdd! vdd!) PMOS_VTL w=1.25u l=50n as=1.3125e-13 \
+        ad=1.3125e-13 ps=1.46u pd=1.46u ld=105n ls=105n m=1
+    M3 (OUT A 0 0) NMOS_VTL w=200n l=50n as=2.1e-14 ad=2.1e-14 ps=410.0n \
+        pd=410.0n ld=105n ls=105n m=1
+    M2 (OUT B 0 0) NMOS_VTL w=200n l=50n as=2.1e-14 ad=2.1e-14 ps=410.0n \
+        pd=410.0n ld=105n ls=105n m=1
+ends NOR_5x
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: or5x
+// View name: schematic
+subckt or5x A B out
+    I13 (A B net4) NOR_5x
+    I14 (net4 out) inv5x
+ends or5x
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: full_adder
+// View name: schematic
+subckt full_adder A B C Cout S
+    I7 (net11 C net12) and5x
+    I6 (A B net19) and5x
+    I8 (net12 net19 Cout) or5x
+    I5 (net11 C S) XOR5
+    I4 (A B net11) XOR5
+ends full_adder
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: mult
+// View name: schematic
+subckt mult A\<3\> A\<2\> A\<1\> A\<0\> B\<3\> B\<2\> B\<1\> B\<0\> P\<7\> \
+        P\<6\> P\<5\> P\<4\> P\<3\> P\<2\> P\<1\> P\<0\>
+    I28 (net59 net60 net57 P\<4\>) half_adder
+    I18 (net36 net64 net102 net106) half_adder
+    I17 (net39 net48 net65 net111) half_adder
+    I16 (net42 net72 net69 P\<1\>) half_adder
+    I27 (net75 net76 net57 net73 P\<5\>) full_adder
+    I26 (net83 net81 net73 P\<7\> P\<6\>) full_adder
+    I25 (net12 net21 net87 net83 net76) full_adder
+    I24 (net90 net99 net92 net75 net60) full_adder
+    I23 (net18 net96 net108 net59 P\<3\>) full_adder
+    I21 (net100 net101 net102 net87 net99) full_adder
+    I20 (net105 net106 net65 net92 net96) full_adder
+    I19 (net110 net111 net69 net108 P\<2\>) full_adder
+    I15 (A\<3\> B\<3\> net81) and5x
+    I14 (A\<2\> B\<3\> net12) and5x
+    I13 (A\<1\> B\<3\> net90) and5x
+    I12 (A\<0\> B\<3\> net18) and5x
+    I11 (A\<3\> B\<2\> net21) and5x
+    I10 (A\<2\> B\<2\> net100) and5x
+    I9 (A\<1\> B\<2\> net105) and5x
+    I8 (A\<0\> B\<2\> net110) and5x
+    I7 (A\<3\> B\<1\> net101) and5x
+    I6 (A\<2\> B\<1\> net36) and5x
+    I5 (A\<1\> B\<1\> net39) and5x
+    I4 (A\<0\> B\<1\> net42) and5x
+    I3 (A\<3\> B\<0\> net64) and5x
+    I2 (A\<2\> B\<0\> net48) and5x
+    I1 (A\<1\> B\<0\> net72) and5x
+    I0 (A\<0\> B\<0\> P\<0\>) and5x
+ends mult
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: AB_OR_C
+// View name: schematic
+subckt AB_OR_C A B C out
+    I1 (C net6) inv5x
+    I2 (net5 net6 out) nand5
+    I0 (A B net5) nand5
+ends AB_OR_C
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: propgen
+// View name: schematic
+subckt propgen G P a b
+    I1 (a b net8) nand5
+    I2 (net8 G) inv5x
+    I0 (a b P) XOR5
+ends propgen
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: adder
+// View name: schematic
+subckt adder A\<0\> A\<1\> A\<2\> A\<3\> A\<4\> A\<5\> B\<0\> B\<1\> \
+        B\<2\> B\<3\> B\<4\> B\<5\> F\<0\> F\<1\> F\<2\> F\<3\> F\<4\> \
+        F\<5\>
+    I32 (p2 p3 net033) nand5
+    I33 (net033 net024) inv5x
+    I24 (g3\:0 p4 F\<4\>) XOR5
+    I34 (g4\:0 net018 F\<5\>) XOR5
+    I20 (g2\:0 p3 F\<3\>) XOR5
+    I18 (g1\:0 p2 F\<2\>) XOR5
+    I17 (g0 p1 F\<1\>) XOR5
+    I36 (A\<5\> B\<5\> net018) XOR5
+    I27 (g0 p1 g1 g1\:0) AB_OR_C
+    I30 (g1\:0 p2 g2 g2\:0) AB_OR_C
+    I35 (g3\:0 p4 g4 g4\:0) AB_OR_C
+    I28 (g2 p3 g3 g3\:2) AB_OR_C
+    I31 (g1\:0 net024 g3\:2 g3\:0) AB_OR_C
+    I5 (g4 p4 A\<4\> B\<4\>) propgen
+    I4 (g3 p3 A\<3\> B\<3\>) propgen
+    I3 (g2 p2 A\<2\> B\<2\>) propgen
+    I2 (g1 p1 A\<1\> B\<1\>) propgen
+    I1 (g0 F\<0\> A\<0\> B\<0\>) propgen
+ends adder
+// End of subcircuit definition.
+
+// Library name: 6130
+// Cell name: FIR
+// View name: schematic
+I3 (clk X1\<0\> X1\<1\> X1\<2\> X1\<3\> 0 X2\<0\> X2\<1\> X2\<2\> X2\<3\> \
+        vdd!) _sub0
+I2 (clk X2\<0\> X2\<1\> X2\<2\> X2\<3\> 0 X3\<0\> X3\<1\> X3\<2\> X3\<3\> \
+        vdd!) _sub0
+I1 (clk X\<0\> X\<1\> X\<2\> X\<3\> 0 X0\<0\> X0\<1\> X0\<2\> X0\<3\> \
+        vdd!) _sub0
+I0 (clk X0\<0\> X0\<1\> X0\<2\> X0\<3\> 0 X1\<0\> X1\<1\> X1\<2\> X1\<3\> \
+        vdd!) _sub0
+I9 (B3\<3\> B3\<2\> B3\<1\> B3\<0\> X3\<3\> X3\<2\> X3\<1\> X3\<0\> \
+        P3\<7\> P3\<6\> P3\<5\> P3\<4\> P3\<3\> P3\<2\> P3\<1\> P3\<0\>) \
+        mult
+I8 (B2\<3\> B2\<2\> B2\<1\> B2\<0\> X2\<3\> X2\<2\> X2\<1\> X2\<0\> \
+        P2\<7\> P2\<6\> P2\<5\> P2\<4\> P2\<3\> P2\<2\> P2\<1\> P2\<0\>) \
+        mult
+I7 (B1\<3\> B1\<2\> B1\<1\> B1\<0\> X1\<3\> X1\<2\> X1\<1\> X1\<0\> \
+        P1\<7\> P1\<6\> P1\<5\> P1\<4\> P1\<3\> P1\<2\> P1\<1\> P1\<0\>) \
+        mult
+I6 (B0\<3\> B0\<2\> B0\<1\> B0\<0\> X0\<3\> X0\<2\> X0\<1\> X0\<0\> \
+        P0\<7\> P0\<6\> P0\<5\> P0\<4\> P0\<3\> P0\<2\> P0\<1\> P0\<0\>) \
+        mult
+I26 (net078\<0\> net078\<1\> net078\<2\> net078\<3\> net078\<4\> \
+        net078\<5\> net73\<0\> net73\<1\> net73\<2\> net73\<3\> net73\<4\> \
+        net73\<5\> Y\<0\> Y\<1\> Y\<2\> Y\<3\> Y\<4\> Y\<5\>) adder
+I25 (P2\<0\> P2\<1\> P2\<2\> P2\<3\> P2\<4\> P2\<5\> P3\<0\> P3\<1\> \
+        P3\<2\> P3\<3\> P3\<4\> P3\<5\> net73\<0\> net73\<1\> net73\<2\> \
+        net73\<3\> net73\<4\> net73\<5\>) adder
+I24 (P0\<0\> P0\<1\> P0\<2\> P0\<3\> P0\<4\> P0\<5\> P1\<0\> P1\<1\> \
+        P1\<2\> P1\<3\> P1\<4\> P1\<5\> net078\<0\> net078\<1\> \
+        net078\<2\> net078\<3\> net078\<4\> net078\<5\>) adder
+V0 (vdd! 0) vsource dc=1 type=dc
+simulatorOptions options reltol=1e-3 vabstol=1e-6 iabstol=1e-12 temp=27 \
+    tnom=27 scalem=1.0 scale=1.0 gmin=1e-12 rforce=1 maxnotes=5 maxwarns=5 \
+    digits=5 cols=80 pivrel=1e-3 sensfile="../psf/sens.output" \
+    checklimitdest=psf 
+modelParameter info what=models where=rawfile
+element info what=inst where=rawfile
+outputParameter info what=output where=rawfile
+designParamVals info what=parameters where=rawfile
+primitives info what=primitives where=rawfile
+subckts info what=subckts  where=rawfile
+saveOptions options save=allpub

@@ -1,0 +1,18 @@
+\o Program:		@(#)$CDS: libManager version 6.1.5 - CAT32 05/06/2013 23:35 (cat91amd) $
+\o Sub version:		sub-version  s014 
+\o Arguments:		-unmapped -mpssession virtuoso11023 -mpshost icsrl-srv1.ece.gatech.edu 
+\o Working Directory:	icsrl-srv1.ece.gatech.edu:/nethome/bcrafton3/6130/ECE6130_Cadence/hw3project2/mult
+\o 64-bit offsets
+\o Qt version: 		4.5.3
+\o changeWorkingDir("/nethome/bcrafton3/6130/ECE6130_Cadence/hw3project2/mult") unnecessary.
+\o ddSetForcedLib("") unnecessary.
+\o Log file is "/nethome/bcrafton3/6130/ECE6130_Cadence/hw3project2/mult/libManager.log".
+\o Opening libManager window.
+\a nrSetWindowVisibility(cdsLibManager "show")
+\o MPS service: map window
+\a nrSetCurrentWindow(cdsLibManager)
+\o Library Manager customization server connected.
+\a nrResizeWindow(cdsLibManager list(65 24 1855 1056))
+\a nrSetWindowVisibility(cdsLibManager "hide")
+\o libManager is exiting.
+\a exit(0)
